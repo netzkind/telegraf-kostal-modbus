@@ -44,13 +44,6 @@ services:
     volumes:
       - "grafana:/var/lib/grafana:rw"
     environment:
-      # - GF_PATHS_CONFIG
-      # - GF_PATHS_DATA
-      # - GF_PATHS_HOME
-      # - GF_PATHS_LOGS
-      # - GF_PATHS_PLUGINS
-      # - GF_PATHS_PROVISIONING
-      # - GF_SERVER_ROOT_URL
       - GF_SECURITY_ADMIN_PASSWORD=secret
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_INSTALL_PLUGINS=grafana-piechart-panel

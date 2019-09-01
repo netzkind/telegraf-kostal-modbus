@@ -6,8 +6,9 @@ datasources:
     access: proxy
     database: telegraf
     user: admin
+    isDefault: true
     url: http://influxdb:8086
     jsonData:
       timeInterval: "10s"
     secureJsonData:
-      password: grafana
+      password: $INFLUXDB_ADMIN_PASSWORD
