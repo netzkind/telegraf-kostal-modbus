@@ -1,0 +1,64 @@
+version: "2.2"
+
+services:
+  telegraf-kostal-plenticore:
+    build:
+      context: telegraf-kostal-plenticore
+      dockerfile: Dockerfile
+    depends_on:
+      - influxdb
+    extra_hosts:
+      - "plenticore.local:10.7.77.10"
+    restart: always
+    mem_limit: 100M
+
+  # chronograf:
+  #   image: chronograf
+  #   links: 
+  #     - influxdb
+  #   ports:
+  #     - 8888:8888
+
+  influxdb:
+    image: influxdb:1.7
+    environment: 
+      - INFLUXDB_REPORTING_DISABLED=true
+      - INFLUXDB_HTTP_LOG_ENABLED=false
+      - INFLUXDB_DATA_QUERY_LOG_ENABLED=false
+      - INFLUXDB_ADMIN_PASSWORD=secret
+      - INFLUXDB_DB=telegraf
+    volumes:
+      - "influx-data:/var/lib/influxdb:rw"
+      - "influx-config:/etc/influxdb:rw"
+    restart: always
+    mem_limit: 500M
+
+  grafana:
+    build:
+      context: grafana
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3000
+    depends_on:
+      - influxdb
+    volumes:
+      - "grafana:/var/lib/grafana:rw"
+    environment:
+      # - GF_PATHS_CONFIG
+      # - GF_PATHS_DATA
+      # - GF_PATHS_HOME
+      # - GF_PATHS_LOGS
+      # - GF_PATHS_PLUGINS
+      # - GF_PATHS_PROVISIONING
+      # - GF_SERVER_ROOT_URL
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+      - INFLUXDB_ADMIN_PASSWORD=secret
+    restart: always
+    mem_limit: 500M
+
+volumes:
+  grafana:
+  influx-data:
+  influx-config:
