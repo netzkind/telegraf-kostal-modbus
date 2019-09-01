@@ -31,6 +31,21 @@ If you choose to run the project as-is, you can do all of the configuration in `
 * Please edit the line `- "plenticore.local:10.7.77.10"` so the IP matches the IP of your Plenticore.
 * Please edit the two lines with `- INFLUXDB_ADMIN_PASSWORD=secret` to change the admin-password for influxdb
 
+### Configuring the dashboard
+
+Once Grafana is up and running, you can reach it at Port 3000 on the IP of your Docker node (When running with Docker
+Toolbox on Windows, thats http://192.168.99.100:3000).
+
+After accessing Grafana, you can also edit the contained Dashboard ("Kostal Plenticore"). To do so, please log into
+Grafana with the user "admin" and the password from the docker-compose.yaml line "GF_SECURITY_ADMIN_PASSWORD=secret".
+
+* The dashboard contains variables for the price of consumption and feed in. You may want to change these
+* The dashboard contains a gauge-diagram for "Erzeugung" which is by default set to "9900 Wp". Please feel free to edit 
+this
+* The dashboard is provisioned into the docker image and may not be saved. Please use "Save as" instead once to create
+a copy of your own
+
+
 ## Where's the data stored?
 
 By default, this project stores the data in so-called docker volumes. There are different ways on how to backup and
