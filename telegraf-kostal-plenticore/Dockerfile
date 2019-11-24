@@ -21,7 +21,7 @@ RUN go get -d -v github.com/influxdata/telegraf \
     && git stash \
     && git checkout 1.11.2 \
     && git stash apply \
-    && make deps static \
+    && make deps telegraf \
     && mkdir -p /build \
     && cp telegraf /build/telegraf
 
